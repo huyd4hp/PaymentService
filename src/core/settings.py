@@ -1,0 +1,6 @@
+RETURN_URL = 'http://localhost:8567/vnpay/payment_return/'
+VNPAY_PAYMENT_URL = 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html' 
+VNPAY_API_URL = 'https://sandbox.vnpayment.vn/merchant_webapi/api/transaction'
+VNPAY_TMN_CODE = 'TG64JA6D'
+VNPAY_HASH_SECRET_KEY = 'A586S1M5DHQLXFW4KEBPUUI52O29PSOQ'
+ACCESS_KEY = 'ba3f1579ab8dcecd51bed8d68da9acf4e6eb12bcc0ffa5a23a03786dbdfa9b5a'
