@@ -34,6 +34,7 @@ def create_booking(request:Request,payment:PaymentForm):
     ipaddr = get_client_ip(request)
     # Build URL Payment
     vnp = vnpay()
+
     vnp.requestData['vnp_Version'] = '2.1.0'
     vnp.requestData['vnp_Command'] = 'pay'
     vnp.requestData['vnp_TmnCode'] = VNPAY_TMN_CODE
