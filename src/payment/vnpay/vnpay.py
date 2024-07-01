@@ -3,12 +3,6 @@ import hmac
 import urllib.parse
 from fastapi.requests import Request
 
-import logging
-# Set up logging configuration
-logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
-logger = logging.getLogger(__name__)
-
-
 def get_client_ip(request: Request):
     x_forwarded_for = request.headers.get('X-Forwarded-For')
     if x_forwarded_for:
@@ -23,7 +17,6 @@ class vnpay:
 
     def get_payment_url(self, vnpay_payment_url, secret_key):
         inputData = sorted(self.requestData.items())
-        logger.info(f"Received inputData POST: {inputData}")
         queryString = ''
         hasData = ''
         seq = 0
@@ -39,7 +32,6 @@ class vnpay:
 
     def validate_response(self, secret_key):
         vnp_SecureHash = self.responseData['vnp_SecureHash']
-        logger.info(f"Received Hash from VNPay: {vnp_SecureHash}")
 
         # Remove hash params
         if 'vnp_SecureHash' in self.responseData.keys():
@@ -49,7 +41,6 @@ class vnpay:
             self.responseData.pop('vnp_SecureHashType')
 
         inputData = sorted(self.responseData.items())
-        logger.info(f"Received inputData GET return: {inputData}")
         hasData = ''
         seq = 0
         for key, val in inputData:
@@ -60,16 +51,8 @@ class vnpay:
                     seq = 1
                     hasData = str(key) + '=' + urllib.parse.quote_plus(str(val))
 
-        print(f"HashData (sorted): {hasData}")
 
         hashValue = self.__hmacsha512(secret_key, hasData)
-
-        print(f"Generated Hash: {hashValue}")
-        print(f"Received Hash: {vnp_SecureHash}")
-
-        print(
-            'Validate debug, HashData:' + hasData + "\n HashValue:" + hashValue + "\nInputHash:" + vnp_SecureHash)
-
         return vnp_SecureHash == hashValue
 
     @staticmethod

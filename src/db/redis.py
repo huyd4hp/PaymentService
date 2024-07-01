@@ -12,7 +12,7 @@ class Redis:
                 cls._instance = super(Redis, cls).__new__(cls)
                 cls._instance._initialized = False
         return cls._instance
-
+    
     def __init__(self, host='localhost', port=6379, db=0):
         if not self._initialized:
             self._client = redis.Redis(host=host, port=port, db=db)
